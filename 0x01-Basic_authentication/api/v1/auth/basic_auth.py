@@ -51,7 +51,7 @@ class BasicAuth(Auth):
                 return (None, None)
             else:
                 credentials = header_str.split(':')
-                return (credentials[0], credentials[1])
+                return (credentials[0], ''.join(credentials[1:]))
         else:
             return (None, None)
 
