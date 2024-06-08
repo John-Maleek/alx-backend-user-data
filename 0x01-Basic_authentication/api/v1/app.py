@@ -48,6 +48,7 @@ def forbidden(error) -> str:
 
 @app.before_request
 def before_request_handler():
+    """before request handler"""
     if auth is None:
         return
     excluded_path = ['/api/v1/status/',
