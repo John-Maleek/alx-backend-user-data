@@ -69,13 +69,11 @@ def before_request_handler():
                      '/api/v1/auth_session/login/']
     if not auth.require_auth(request.path, excluded_path):
         return
-    if auth.authorization_header(request) is None:
+    if not auth.authorization_header(request) \
+            and not auth.session_cookie(request):
         abort(401)
     if auth.current_user(request) is None:
         abort(403)
-    if not auth.authorization_header(request) \
-            and not auth.session_cookie(request):
-        return None, abort(401)
     else:
         request.current_user = auth.current_user(request)
 
