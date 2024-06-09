@@ -34,3 +34,18 @@ def login():
     session_id = auth.create_session(user.id)
     user_dict = jsonify(user.to_json())
     user_dict.set_cookie(getenv('SESSION_NAME'), session_id)
+    return user_dict
+
+
+@app_views.route('/auth_session/logout', methods=['DELETE'],
+                 strict_slashes=False)
+def logout() -> str:
+    """ Deleting the Session ID contains in the request as cookie """
+    """ DELETE /auth_session/login
+    Return:
+        - Dictionary representation of the User
+    """
+    from api.v1.app import auth
+    if not auth.destroy_session(request):
+        abort(404)
+    return (jsonify({}), 200)
