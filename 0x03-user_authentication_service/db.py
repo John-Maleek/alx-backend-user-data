@@ -2,7 +2,7 @@
 """DB module
 """
 from sqlalchemy import create_engine
-# from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 from sqlalchemy.exc import InvalidRequestError
@@ -32,12 +32,12 @@ class DB:
             self.__session = DBSession()
         return self.__session
 
-    def add_user(self, email, hashed_password) -> User:
+    def add_user(self, email: str, hashed_password: str) -> User:
         """adds a user to the db
         """
         user = User(email=email, hashed_password=hashed_password)
         self.__session.add(user)
-        self.__session.commit(user)
+        self.__session.commit()
         return user
 
     def find_user_by(self, **kwargs) -> User:
